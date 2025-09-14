@@ -9,5 +9,6 @@ public class GAM415_Carlson : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
-	}
+		PublicIncludePaths.AddRange(new string[] { "GAM415_Carlson" });
+    }
 }
