@@ -8,6 +8,7 @@
 
 class USphereComponent;
 class UProjectileMovementComponent;
+class UNiagaraSystem;
 
 UCLASS(config=Game)
 class AGAM415_CarlsonProjectile : public AActor
@@ -36,6 +37,9 @@ class AGAM415_CarlsonProjectile : public AActor
 
 	UPROPERTY()
 	UMaterialInstanceDynamic* DynamicMaterialInstance;
+
+	UPROPERTY(EditAnywhere)
+	UNiagaraSystem* colorP;
 
 public:
 	AGAM415_CarlsonProjectile();

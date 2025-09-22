@@ -6,6 +6,8 @@
 #include "Components/SphereComponent.h"
 #include "Components/DecalComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 AGAM415_CarlsonProjectile::AGAM415_CarlsonProjectile() 
 {
@@ -43,11 +45,13 @@ AGAM415_CarlsonProjectile::AGAM415_CarlsonProjectile()
 void AGAM415_CarlsonProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+	// Assign Random Color
 	RandomColor = FLinearColor(UKismetMathLibrary::RandomFloatInRange(0.0f, 1.0f), UKismetMathLibrary::RandomFloatInRange(0.0f, 1.0f), UKismetMathLibrary::RandomFloatInRange(0.0f, 1.0f), 1.0f);
 
 	DynamicMaterialInstance = UMaterialInstanceDynamic::Create(ProjectileMat, this);
 	ProjectileMesh->SetMaterial(0, DynamicMaterialInstance);
 
+	// Set Dynamic Material Color
 	DynamicMaterialInstance->SetVectorParameterValue("Color", RandomColor);
 }
 
@@ -63,6 +67,14 @@ void AGAM415_CarlsonProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* Othe
 
 	if (OtherActor != nullptr)
 	{
+		if (colorP)
+		{
+			// Set and Spawn Particle Effect
+			UNiagaraComponent* particleComp = UNiagaraFunctionLibrary::SpawnSystemAttached(colorP, HitComp, NAME_None, FVector(-20.f, 0.f, 0.f), FRotator(0.f), EAttachLocation::KeepRelativeOffset, true);
+			particleComp->SetNiagaraVariableLinearColor(FString("RandColor"), RandomColor);
+			ProjectileMesh->DestroyComponent();
+			CollisionComp->BodyInstance.SetCollisionProfileName("NoCollision");
+		}
 		// Generate frame
 		float randomFrame = UKismetMathLibrary::RandomFloatInRange(0.0f, 3.0f);
 
