@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
+#include "PerlinProcTerrain.h"
 
 AGAM415_CarlsonProjectile::AGAM415_CarlsonProjectile() 
 {
@@ -84,5 +85,12 @@ void AGAM415_CarlsonProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* Othe
 		// Set color and frame
 		MatInstance->SetVectorParameterValue("Color", RandomColor);
 		MatInstance->SetScalarParameterValue("Frame", randomFrame);
+
+		APerlinProcTerrain* ProcTerrain = Cast<APerlinProcTerrain>(OtherActor);
+
+		if (ProcTerrain)
+		{
+			ProcTerrain->AlterMesh(Hit.ImpactPoint);
+		}
 	}
 }
