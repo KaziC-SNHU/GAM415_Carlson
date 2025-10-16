@@ -32,9 +32,11 @@ void ACubeDMIMod::BeginPlay()
 
 	if (BaseMaterial)
 	{
+		// Create DMI
 		DynamicMaterialInstance = UMaterialInstanceDynamic::Create(BaseMaterial, this);
 	}
 	
+	// Apply DMI to mesh
 	if (CubeMesh)
 	{
 		CubeMesh->SetMaterial(0, DynamicMaterialInstance);
