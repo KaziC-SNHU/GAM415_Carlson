@@ -29,9 +29,6 @@ class AGAM415_CarlsonProjectile : public AActor
 	UPROPERTY(EditAnywhere)
 	UMaterial* BaseMaterial;
 
-	UPROPERTY()
-	FLinearColor RandomColor;
-
 	UPROPERTY(EditAnywhere)
 	UMaterialInterface* ProjectileMat;
 
@@ -56,5 +53,11 @@ public:
 	USphereComponent* GetCollisionComp() const { return CollisionComp; }
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+
+	UPROPERTY(EditAnywhere)
+	bool bisTeleporting = false;
+
+	UPROPERTY(BlueprintReadOnly)
+	FLinearColor RandomColor;
 };
 

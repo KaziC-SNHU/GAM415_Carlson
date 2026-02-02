@@ -3,6 +3,7 @@
 
 #include "CubeDMIMod.h"
 #include "GAM415_CarlsonCharacter.h"
+#include "GAM415_CarlsonProjectile.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"

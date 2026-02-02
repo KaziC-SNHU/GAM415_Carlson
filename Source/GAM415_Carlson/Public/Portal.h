@@ -8,6 +8,7 @@
 #include "Engine/TextureRenderTarget2D.h"
 #include "Components/BoxComponent.h"
 #include "GAM415_CarlsonCharacter.h"
+#include "GAM415_CarlsonProjectile.h"
 #include "Portal.generated.h"
 
 
@@ -51,6 +52,9 @@ public:
 
 	UFUNCTION()
 	void SetBool(AGAM415_CarlsonCharacter* playerChar);
+
+	UFUNCTION()
+	void SetBoolProj(AGAM415_CarlsonProjectile* playerProj);
 
 	UFUNCTION()
 	void UpdatePortals();

@@ -53,6 +53,7 @@ void APortal::Tick(float DeltaTime)
 void APortal::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	AGAM415_CarlsonCharacter* playerChar = Cast<AGAM415_CarlsonCharacter>(OtherActor);
+	AGAM415_CarlsonProjectile* playerProj = Cast<AGAM415_CarlsonProjectile>(OtherActor);
 
 	// If player char valid, teleport them to the other portal
 	if (playerChar)
@@ -74,6 +75,25 @@ void APortal::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherA
 			}
 		}
 	}
+	// If player projectile valid, teleport it to the other portal
+	else if (playerProj)
+	{
+		if (OtherPortal)
+		{
+			if (!playerProj->bisTeleporting)
+			{
+				// Teleport projectile
+				playerProj->bisTeleporting = true;
+				FVector loc = OtherPortal->GetActorLocation();
+				playerProj->SetActorLocation(loc);
+				// Protect from immediate re-teleporting
+				FTimerHandle TimerHandle;
+				FTimerDelegate TimerDel;
+				TimerDel.BindUFunction(this, FName("SetBoolProj"), playerProj);
+				GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerDel, 1, false);
+			}
+		}
+	}
 }
 
 void APortal::SetBool(AGAM415_CarlsonCharacter* playerChar)
@@ -81,6 +101,14 @@ void APortal::SetBool(AGAM415_CarlsonCharacter* playerChar)
 	if (playerChar)
 	{
 		playerChar->bisTeleporting = false;
+	}
+}
+
+void APortal::SetBoolProj(AGAM415_CarlsonProjectile* playerProj)
+{
+	if (playerProj)
+	{
+		playerProj->bisTeleporting = false;
 	}
 }
 
